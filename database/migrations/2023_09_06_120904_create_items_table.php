@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('category_code');
             $table->string('unit_code');
-            $table->string('code', 6)->unique();
-            $table->string('name', 20)->unique();
+            $table->string('code', 6);
+            $table->string('name', 20);
             $table->integer('quantity')->nullable();
             $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
