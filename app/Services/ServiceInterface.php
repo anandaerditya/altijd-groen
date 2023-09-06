@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+
 interface ServiceInterface
 {
     /**
@@ -24,9 +26,10 @@ interface ServiceInterface
     public function delete($id): bool;
 
     /**
-     * @return array
+     * @param $id
+     * @return array|LengthAwarePaginator
      */
-    public function all(): array;
+    public function all($id): array|\Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
     /**
      * @param $id

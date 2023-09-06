@@ -28,11 +28,20 @@ class AdminController extends Controller
         $this->itemService = new ItemService();
         $this->category = DB::table('item_categories');
         $this->unit = DB::table('item_units');
+        $this->middleware('auth.middle')->except(['index']);
     }
 
-    public function index()
+    /**
+     * @return View|Application|Factory|\Illuminate\Contracts\Foundation\Application
+     */
+    public function index(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        dd($this->itemService->all());
+        $result = [
+            'page_title' => 'Home',
+            'data' => $this->itemService->all(Session::get('userdata')->id),
+        ];
+
+        return view('admin.home')->with($result);
     }
 
     /**

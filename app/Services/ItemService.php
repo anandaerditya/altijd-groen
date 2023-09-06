@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 
@@ -13,7 +14,10 @@ class ItemService implements ServiceInterface
 
     public function __construct()
     {
-        $this->builder = DB::table('items')->join('users', 'items.user_id', '=', 'users.id');
+        $this->builder = DB::table('items')
+            ->join('users', 'items.user_id', '=', 'users.id')
+            ->join('item_categories', 'items.category_code', '=', 'item_categories.code')
+            ->join('item_units', 'items.unit_code', '=', 'item_units.code');
         $this->category = DB::table('item_categories');
         $this->unit = DB::table('item_units');
     }
@@ -73,12 +77,21 @@ class ItemService implements ServiceInterface
     }
 
     /**
-     * @return array
+     * @param $id
+     * @return LengthAwarePaginator
      */
-    public function all(): array
+    public function all($id): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
-        $data = $this->builder->select(['items.id', 'items.category_code', 'items.unit_code', 'items.code', 'items.name', 'items.quantity', 'users.name']);
-        return $data->get()->toArray();
+        $data = $this->builder->select([
+            'items.id',
+            'item_categories.name as category',
+            'item_units.name as unit',
+            'items.code',
+            'items.name as prod_name',
+            'items.quantity',
+            'users.name'
+        ])->where('items.user_id', $id);
+        return $data->paginate(5);
     }
 
     /**

@@ -24,7 +24,7 @@ Route::get('/', [\App\Http\Controllers\AuthController::class, 'index'])->name('u
 Route::prefix('user')->group(function () {
    Route::get('login', [\App\Http\Controllers\AuthController::class, 'login'])->name('user.login');
    Route::post('login/process', [\App\Http\Controllers\AuthController::class, 'processLogin'])->name('user.login.process');
-   Route::get('logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('user.login.logout');
+   Route::get('logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('user.logout');
 });
 
 Route::prefix('admin')->group(function () {

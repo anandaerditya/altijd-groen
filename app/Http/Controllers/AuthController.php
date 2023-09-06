@@ -31,7 +31,7 @@ class AuthController extends Controller
             return redirect()->route('user.login')->withErrors(['error' => 'You should login to access this page']);
         }
 
-//        return redirect()->route('admin.home');
+        return redirect()->route('admin.home');
     }
 
     /**
@@ -39,6 +39,10 @@ class AuthController extends Controller
      */
     public function login(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
+        if (!empty(Session::get('userdata'))) {
+            return redirect()->route('admin.home');
+        }
+
         return view('auth.login')->with(['page_title' => 'Login']);
     }
 
