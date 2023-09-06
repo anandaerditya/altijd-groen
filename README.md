@@ -20,7 +20,14 @@ Follow these steps to install the project to your computer.
 2. **Copy .env files**
    -## Use the following command to copy `.env` configuration files. Then hit `Enter`
 
-        cp .env.example .env
+       cp .env.example .env
+
+3. **Edit .env file**
+   -## Make sure your database credentials are aligned with `.env` files by editing the following line inside `.env`
+
+       DB_DATABASE=your_database_name
+       DB_USERNAME=your_database_username
+       DB_PASSWORD=your_database_password
 
 3. **Installing Composer Packages**
    -## Use the following command to install Laravel's required packages trough Composer. Then hit `Enter`
